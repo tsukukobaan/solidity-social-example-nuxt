@@ -28,13 +28,6 @@ export default {
   components: {
     TextForm
   },
-  data () {
-    return {
-      posts: [],
-      user: null,
-      ready: false
-    }
-  },
   created () {
     this.$store.commit('setContract', new Contract())
   },

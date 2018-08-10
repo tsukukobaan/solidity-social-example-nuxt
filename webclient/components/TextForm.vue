@@ -20,7 +20,7 @@ export default {
       message: ""
     }
   },
-  method: {
+  methods: {
     onClick () {
       console.log(this.message)
       return this.$store.dispatch('newPost', this.message)
