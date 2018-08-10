@@ -1,33 +1,68 @@
 <template>
-  <section class="container">
+  <div className="container">
+    <h5>
+      <label>Hello: {{user}}</label>
+    </h5>
     <div>
-      <app-logo/>
-      <h1 class="title">
-        solidity-social-example
-      </h1>
-      <h2 class="subtitle">
-        Nuxt.js clone of solidity-social-example
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+      <text-form></text-form>
     </div>
-  </section>
+    <div>
+      <ul className="list-group" style={MT10}>
+        <post 
+          v-for="post in posts"
+          v-bind:data="post"
+          v-bind:key="post.text">
+        </post>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
+import { mapState } from 'vuex'
+import TextForm from '~/components/TextForm.vue'
+import Post from '~/components/post'
+import Contract from '~/utils/contract'
 
 export default {
   components: {
-    AppLogo
+    TextForm
+  },
+  data () {
+    return {
+      posts: [],
+      user: null,
+      ready: false
+    }
+  },
+  created () {
+    this.$store.commit('setContract', new Contract())
+  },
+  async mounted () {
+    await this.$store.dispatch('initialize')
+  },
+  beforeDestroy () {
+    clearInterval(this.intervalHandler)
+  },
+  computed: {
+    ...mapState({
+      user: state => {
+        return state.user
+      },
+      posts: state => {
+        return state.posts
+      }
+    })
+  },
+  methods: {
+    async newPost(text) {
+      const tx = await this.contract.newPost(text)
+      console.log('New Post Sent', tx, text)
+    },
+    async sendComment(postId, text) {
+      const tx = await this.contract.newComment(postId, text)
+      console.log('New Comment Sent', tx, text)
+    }
   }
 }
 </script>
