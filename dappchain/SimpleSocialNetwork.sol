@@ -36,6 +36,10 @@ contract SimpleSocialNetwork {
         emit NewPostAdded(postId, 0, msg.sender);
     }
 
+    function getPost(uint _id) public {
+      emit posts
+    }
+
     function newComment(uint _postId, string _text) public {
         Comment memory comment = Comment(_text);
         uint commentId = comments.push(comment) - 1;

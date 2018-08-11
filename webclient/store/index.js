@@ -85,5 +85,9 @@ export const actions = {
     console.log('sendComment')
     const tx = await state.contract.newComment(payload.postId, payload.comment)
     console.log('New Comment Sent', tx, text)
+  },
+  async getPosts({state},payload){
+    console.log('Get Posts')
+    const tx = await state.contract.getPosts(payload.postId,payload.comment)
   }
 }

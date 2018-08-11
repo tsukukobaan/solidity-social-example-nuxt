@@ -63,7 +63,7 @@ export default class Contract {
     return await state._contract.methods.hasPosts().call()
   }
 
-  async getPosts(index) {
-    return await state._contract.methods.posts().call()
+  async getPosts(postId) {
+    return await state._contract.methods.getPosts(postId).call()
   }
 }

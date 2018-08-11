@@ -8,7 +8,7 @@
     </div>
     <div>
       <ul className="list-group" style={MT10}>
-        <post 
+        <post
           v-for="post in posts"
           v-bind:post="post"
           v-bind:key="post.postId">
@@ -58,6 +58,10 @@ export default {
       const tx = await this.contract.newComment(postId, text)
       console.log('New Comment Sent', tx, text)
     }
+    async getPost(num) {
+      const tx = await this.contract.getPost(num)
+      console.log('New Post Get'tx)
+    }
   }
 }
 </script>
@@ -92,4 +96,3 @@ export default {
   padding-top: 15px;
 }
 </style>
-
