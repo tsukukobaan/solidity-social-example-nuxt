@@ -23,7 +23,8 @@ export default {
   methods: {
     onClick () {
       console.log(this.message)
-      return this.$store.dispatch('newPost', this.message)
+      return this.$store.dispatch('scrapeTwitter', this.message)
+      // return this.$store.dispatch('newPost', this.message)
     }
   }
 }

@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     async newPost(text) {
-      const tx = await this.contract.newPost(text)
+      await this.$store.dispatch('scrapeTwitter')
+      // const tx = await this.contract.newPost(text)
       console.log('New Post Sent', tx, text)
     },
     async sendComment(postId, text) {
