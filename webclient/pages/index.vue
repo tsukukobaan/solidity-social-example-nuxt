@@ -1,7 +1,7 @@
 <template>
   <div className="container">
     <h5>
-      <label>Hello: {{user}}</label>
+      <label>Hello: {{this.$store.state.user}}</label>
     </h5>
     <div>
       <text-form></text-form>
@@ -22,17 +22,18 @@
 import { mapState } from 'vuex'
 import TextForm from '~/components/TextForm.vue'
 import Post from '~/components/post'
-import Contract from '~/utils/contract'
 
 export default {
   components: {
     TextForm
   },
-  created () {
-    this.$store.commit('setContract', new Contract())
-  },
-  async mounted () {
-    await this.$store.dispatch('initialize')
+  async created () {
+    try {
+      const contract = await this.$store.dispatch('initContract')
+      this.$store.dispatch('initialize', contract)
+    } catch (error) {
+      console.log(error)
+    }
   },
   beforeDestroy () {
     clearInterval(this.intervalHandler)

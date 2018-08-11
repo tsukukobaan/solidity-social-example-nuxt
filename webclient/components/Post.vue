@@ -19,7 +19,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Comment from './Comment'
+import Comment from './Comments'
 export default {
   name: 'Post',
   components: {

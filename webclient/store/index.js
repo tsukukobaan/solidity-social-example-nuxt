@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getIndexed from '~/utils/indexer_client'
+import Contract from './contract'
 
 Vue.use(Vuex)
 
@@ -8,7 +9,8 @@ export const state = () => ({
   contract: null,
   posts: [],
   user: null,
-  ready: false
+  ready: false,
+  interval: null
 })
 
 export const mutations = {
@@ -23,16 +25,28 @@ export const mutations = {
   },
   setReady (state, payload) {
     state.ready = payload
+  },
+  setIntervalObj (state, payload) {
+    state.interval = payload
   }
 }
 
 export const actions = {
-  async initialize ({state, commit, dispatch}) {
-    await state.contract.start()
-    state.user = state.contract.getUser()
-    state.intervalHandler = setInterval(() => {
-      dispatch('updatePostsAndComments')
-    }, 1000)
+  async initContract ({commit}) {
+    const contract = await new Contract()
+    commit('setContract', contract)
+    return contract
+  },
+  async initialize ({state, commit, dispatch}, contract) {
+    console.log('intialize start')
+    console.log(state)
+    await contract.start()
+    commit('setUser', contract.getUser())
+    commit('setIntervalObj',
+      setInterval(() => {
+        dispatch('updatePostsAndComments')
+      }, 1000)
+    )
   },
   async updatePostsAndComments({commit}) {
     let posts = []
