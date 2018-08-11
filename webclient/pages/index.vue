@@ -1,12 +1,13 @@
 <template>
   <div className="container">
     <h5>
-      <label>Hello: {{this.$store.state.user}}</label>
+      <label>よくわからんアドレス: {{this.$store.state.user}}</label>
     </h5>
-    <div>
+    <div class="form-box">
       <text-form></text-form>
     </div>
-    <div>
+    <h3>保存されたツイート(黒歴史)</h3>
+    <div class="content-box">
       <ul className="list-group" style={MT10}>
         <post 
           v-for="post in posts"
@@ -48,23 +49,13 @@ export default {
         return state.posts
       }
     })
-  },
-  methods: {
-    async newPost(text) {
-      await this.$store.dispatch('scrapeTwitter')
-      // const tx = await this.contract.newPost(text)
-      console.log('New Post Sent', tx, text)
-    },
-    async sendComment(postId, text) {
-      const tx = await this.contract.newComment(postId, text)
-      console.log('New Comment Sent', tx, text)
-    }
   }
 }
 </script>
 
 <style>
 .container {
+  width: 100%;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -91,6 +82,36 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+
+h5 {
+  margin: 20px auto;
+}
+
+h5 label {
+  width: 100%;
+  text-align: center;
+}
+
+h3 {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.form-box {
+  width: 80%;
+  margin: auto;
+  border: 1px solid #CECECE;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.content-box {
+  width: 80%;
+  margin: 10px auto;
+  border: 1px solid #CECECE;
+  border-radius: 5px;
+  padding: 10px;
 }
 </style>
 

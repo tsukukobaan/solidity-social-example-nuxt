@@ -3,10 +3,10 @@
   <div className="card-body">
     <form>
       <div className="form-group">
-        <label >What's On Your Mind ? </label>
-        <textarea className="form-control" rows="2" v-model="message"></textarea>
+        <div class="input-meessage">こんなツイートがあったよ！リンクを入れてね！</div>
+        <input class="tweet-url-input" type="text" name="tweet-url" className="form-control" rows="2" v-model="message" />
       </div>
-      <b-button variant="primary" type="button" v-on:click="onClick()">New Post</b-button>
+      <b-button variant="primary" type="button" v-on:click="onClick()">永久保存w</b-button>
     </form>
   </div>
 </div>
@@ -24,12 +24,20 @@ export default {
     onClick () {
       console.log(this.message)
       return this.$store.dispatch('scrapeTwitter', this.message)
-      // return this.$store.dispatch('newPost', this.message)
     }
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+.from-group {
+  width: 100%;
+}
+.form-group label{
+  display: block;
+}
+.tweet-url-input {
+  width: 100%;
+  margin: 10px auto;
+}
 </style>

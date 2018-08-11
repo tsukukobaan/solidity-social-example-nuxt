@@ -1,37 +1,17 @@
 <template>
 <div class="post">
-  <pre>{{post.text}}</pre>
-  <small>user: {{post.owner}}</small>
-  <div>
-    <b-button type="button" className="btn btn-primary" v-on:click="newComment">New Comment</b-button>
-  </div>
-  <div>
-    <ul className="list-group">
-      <comment
-        v-for="comment in comments"
-        v-bind:comment="comment"
-        v-bind:key="comment.text">
-      </comment>
-    </ul>
-  </div>
+  <div>{{post.text}}</div>
+  <small>記録アドレス{{post.owner}}</small>
 </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Comment from './Comments'
+
 export default {
   name: 'Post',
-  components: {
-    Comment
-  },
   props: ['post'],
   computed: {
-    comments () {
-      console.log('comments')
-      console.log(this.post)
-      return this.post.comments
-    },
     ...mapState({
       user: state => {
         return state.user
