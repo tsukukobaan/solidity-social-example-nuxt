@@ -10,8 +10,8 @@
       <ul className="list-group" style={MT10}>
         <post 
           v-for="post in posts"
-          v-bind:data="post"
-          v-bind:key="post.text">
+          v-bind:post="post"
+          v-bind:key="post.postId">
         </post>
       </ul>
     </div>
@@ -21,11 +21,12 @@
 <script>
 import { mapState } from 'vuex'
 import TextForm from '~/components/TextForm.vue'
-import Post from '~/components/post'
+import Post from '~/components/Post.vue'
 
 export default {
   components: {
-    TextForm
+    TextForm,
+    Post
   },
   async created () {
     try {

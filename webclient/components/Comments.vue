@@ -1,7 +1,7 @@
 <template>
 <div class="comment">
-  <pre>{this.comment.text}</pre>
-  <small>user: {this.comment.owner}</small>
+  <pre>{{this.comment.text}}</pre>
+  <small>user: {{this.comment.owner}}</small>
 </div>
 </template>
 

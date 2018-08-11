@@ -1,8 +1,13 @@
 const http = require('http')
 
+export {
+  getIndexed
+}
+
 function getIndexed(type) {
   return new Promise((resolve, reject) => {
     function reqListener () {
+      console.log('getIndexed')
       if (this.status == 200) {
         const result = JSON.parse(this.responseText).hits.hits
         resolve(result.map(result => result._source))
@@ -16,8 +21,4 @@ function getIndexed(type) {
     oReq.open('GET', `http://localhost:8081/${type}`)
     oReq.send()
   })
-}
-
-export default {
-  getIndexed
 }

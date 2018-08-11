@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import getIndexed from '~/utils/indexer_client'
+import { getIndexed } from './indexer_client'
 import Contract from './contract'
 
 Vue.use(Vuex)
@@ -81,8 +81,9 @@ export const actions = {
     const tx = await state.contract.newPost(text)
     console.log('New Post Sent', tx, text)
   },
-  async sendComment({state}, postId, text) {
-    const tx = await state.contract.newComment(postId, text)
+  async sendComment({state}, payload) {
+    console.log('sendComment')
+    const tx = await state.contract.newComment(payload.postId, payload.comment)
     console.log('New Comment Sent', tx, text)
   }
 }
