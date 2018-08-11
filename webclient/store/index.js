@@ -85,5 +85,37 @@ export const actions = {
     console.log('sendComment')
     const tx = await state.contract.newComment(payload.postId, payload.comment)
     console.log('New Comment Sent', tx, text)
+  },
+  scrapeTwitter({dispatch}, url) {
+    console.log('scrapeTwitter')
+    console.log(url)
+    let axios = require('axios')
+    let cheerio = require('cheerio')
+    // let fs = require('fs')
+    axios.get(url)
+    .then((response) => {
+        if(response.status === 200) {
+          const html = response.data
+          const htmlsource = cheerio.load(html)
+          var htmlsource = cheerio.load(html)
+          // const title = htmlsource('title').text()
+          const text = htmlsource('.TweetTextSize').text()
+          const fullname = htmlsource('.ProfileNameTruncated-link').text()
+          // const username = htmlsource('.u-linkComplex-target').first().text()
+          const timestamp = htmlsource('.client-and-actions').children().children().text()
+          const fullText = fullname + ' has Tweeted:' +  text + ' at: ' + timestamp
+          dispatch('newPost', fullText)
+          // console.log(title)
+          // console.log(text)
+          // console.log(fullname)
+          // console.log(username)
+          // console.log(timestamp)
+          // console.log(fullText)
+        }
+      }
+    )
+    .catch(error => {
+      console.log(error)
+    })
   }
 }
